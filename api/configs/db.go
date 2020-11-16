@@ -1,17 +1,30 @@
 package configs
 
-import "github.com/go-pg/pg"
+import (
+	"database/sql"
+	"fmt"
+	"log"
+	"os"
 
-func Connect() *pg.DB{
-	opts:= &pg.Options{
-		User: "db_username",
-		Password: "db_password",
-		Addr: "localhost:5432",
-		Database: "db_name",
+	"github.com/joho/godotenv"
+)
+
+func Connect() *sql.DB {
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
+	db, err := sql.Open("postgres", os.Getenv("POSTGRES_URL"))
+	if err != nil {
+		panic(err)
+	}
+	err = db.Ping()
+	if err != nil {
+		panic(err)
 	}
 
-	var db *pg.DB = pg.Connect(opts)
-	if db == nil {
-		
-	}
+	fmt.Println("Successfully connected")
+	return db
 }
+
+
