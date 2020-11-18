@@ -10,9 +10,7 @@ import (
 
 func main() {
 	r:= gin.Default()
-	models.ConnectDatabase()
-	r.GET("/books", controllers.FindBooks)
-	r.POST("/books", controllers.CreateBook)
-	r.GET("/books/:id", controllers.FindBook)
+	models.Connect()
+	r.GET("/aircrafts", controllers.FindAircrafts)
 	log.Fatal(r.Run(":8080"))
 }
