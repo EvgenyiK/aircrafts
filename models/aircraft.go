@@ -10,14 +10,15 @@ import (
 )
 
 type Aircraft struct {
-	Code  int    `json:"aircraft_code" gorm:"primary_key"`
+	ACode string `json:"aircraft_code" gorm:"primary_key"`
 	Model string `json:"model"`
 	Range int    `json:"range"`
+	Code  int    `json:"code"`
 }
 
 var DB *gorm.DB
 
-func Connect() *gorm.DB{
+func Connect() *gorm.DB {
 	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatal("Error loading .env file")
@@ -28,9 +29,8 @@ func Connect() *gorm.DB{
 	if err != nil {
 		log.Fatalln(err)
 	}
-	
+
 	db.AutoMigrate(Aircraft{})
 	DB = db
 	return db
 }
-

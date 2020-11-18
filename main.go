@@ -11,6 +11,7 @@ import (
 func main() {
 	r:= gin.Default()
 	models.Connect()
+	r.LoadHTMLGlob("templates/*")
 	r.GET("/aircrafts", controllers.FindAircrafts)
 	log.Fatal(r.Run(":8080"))
 }
